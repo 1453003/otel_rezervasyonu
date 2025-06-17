@@ -99,17 +99,17 @@ http://localhost:8080
 
 
 
-![Ana Sayfa](fotograflar/1.png)
+![Ana Sayfa](otel/fotograflar/1.png)
 
-![Kayıt Sayfası](fotograflar/2.png)
+![Kayıt Sayfası](otel/fotograflar/2.png)
+![Kayıt Sayfası](otel/fotograflar/3.png)
+![Otel Listeleme](fotel/fotograflar/4.png)
 
-![Otel Listeleme](fotograflar/4.png)
+![Rezervasyon](otel/fotograflar/5.png)
 
-![Rezervasyon](fotograflar/5.png)
+![Kullanıcı Rezervasyonları](otel/fotograflar/6.png)
 
-![Kullanıcı Rezervasyonları](fotograflar/6.png)
-
-![Admin Paneli](fotograflar/7.png)
+![Admin Paneli](otel/fotograflar/7.png)
 
 ## 🔒 Güvenlik
 
@@ -119,8 +119,8 @@ http://localhost:8080
 ## 👨‍💻 Geliştirici
 
 **Adınız Soyadınız**
-E-posta: [yourmail@example.com](mailto:rojinothan.39@egmail.com)
-LinkedIn: [linkedin.com/in/kullaniciadi](https://www.linkedin.com/in/rojin-orhan/)
+E-posta: [rojinothan.39@egmail.com](mailto:rojinothan.39@egmail.com)
+LinkedIn: [https://www.linkedin.com/in/rojin-orhan/](https://www.linkedin.com/in/rojin-orhan/)
 
 ---
 
