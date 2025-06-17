@@ -1,94 +1,102 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Oteller</title>
+    <meta charset="UTF-8">
+    <title>Otel Rezervasyon</title>
     <style>
+        * {
+            box-sizing: border-box;
+        }
+
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: #f7f7f7;
             margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #fafafa;
             color: #333;
         }
 
-        /* --- HEADER --- */
         header {
-            background-color: #d81b60;
-            padding: 15px 30px;
+            background-color: #c2185b;
+            padding: 20px 30px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             color: white;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            flex-wrap: wrap;
         }
 
         .logo {
-            font-size: 24px;
+            font-size: 26px;
             font-weight: bold;
+        }
+
+        nav {
+            display: flex;
+            flex-wrap: wrap;
         }
 
         nav a {
             color: white;
             text-decoration: none;
-            margin-left: 20px;
+            margin-left: 25px;
             font-weight: 500;
             transition: color 0.3s ease;
         }
 
         nav a:hover {
-            color: #ffc1e3;
+            color: #f8bbd0;
         }
 
         h2 {
-            color: #d81b60;
             text-align: center;
+            color: #c2185b;
             margin: 40px 0 20px;
+            font-size: 32px;
         }
 
-        table {
-            border-collapse: collapse;
-            width: 90%;
-            max-width: 900px;
-            margin: 0 auto;
-            background-color: #fff;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-            border-radius: 8px;
-            overflow: hidden;
+        .otel-listesi {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            padding: 0 40px 60px;
         }
 
-        th, td {
-            padding: 15px 20px;
-            text-align: center;
+        .otel-kart {
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            padding: 20px;
+            transition: transform 0.2s;
         }
 
-        th {
-            background-color: #d81b60;
-            color: white;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
+        .otel-kart:hover {
+            transform: translateY(-5px);
         }
 
-        tr:nth-child(even) {
-            background-color: #fdf0f6;
+        .otel-kart h3 {
+            margin-top: 0;
+            color: #c2185b;
         }
 
-        tr:hover {
-            background-color: #ffe3f2;
-            cursor: pointer;
+        .otel-kart p {
+            margin: 5px 0;
         }
 
-        a.button-link {
+        .rezervasyon-btn {
+            margin-top: 15px;
             display: inline-block;
-            padding: 8px 15px;
-            background-color: #d81b60;
+            padding: 10px 20px;
+            background-color: #c2185b;
             color: white;
-            border-radius: 20px;
+            border-radius: 25px;
             text-decoration: none;
             font-weight: 600;
             transition: background-color 0.3s ease;
+            text-align: center;
         }
 
-        a.button-link:hover {
+        .rezervasyon-btn:hover {
             background-color: #ad1457;
         }
 
@@ -102,45 +110,8 @@
                 margin-top: 10px;
             }
 
-            table, thead, tbody, th, td, tr {
-                display: block;
-            }
-
-            th {
-                display: none;
-            }
-
-            tr {
-                margin-bottom: 20px;
-                background-color: #fff !important;
-                box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-                border-radius: 8px;
-                padding: 15px;
-            }
-
-            td {
-                text-align: right;
-                padding-left: 50%;
-                position: relative;
-            }
-
-            td::before {
-                content: attr(data-label);
-                position: absolute;
-                left: 20px;
-                width: 45%;
-                padding-left: 15px;
-                font-weight: 600;
-                text-align: left;
-                color: #d81b60;
-            }
-
-            a.button-link {
-                display: block;
-                width: 100%;
-                text-align: center;
-                margin-top: 10px;
-                border-radius: 6px;
+            .otel-listesi {
+                padding: 0 20px 40px;
             }
         }
     </style>
@@ -151,33 +122,31 @@
     <div class="logo">Otel Rezervasyon</div>
     <nav>
         <a th:href="@{/oteller}">Oteller</a>
-        <a th:href="@{/rezervasyonlarim}">Rezervasyonlarım</a>
-        <a th:href="@{/logout}">Çıkış Yap</a>
+        <a th:if="${session.user != null}" th:href="@{/rezervasyonlarim}">Rezervasyonlarım</a>
+        <a th:if="${session.user == null}" th:href="@{/login}">Giriş Yap</a>
+        <a th:if="${session.user != null}" th:href="@{/logout}">Çıkış Yap</a>
     </nav>
 </header>
 
-<h2>Otel Listesi</h2>
+<h2>Popüler Oteller</h2>
 
-<table>
-    <thead>
-    <tr>
-        <th>Ad</th>
-        <th>Konum</th>
-        <th>Fiyat</th>
-        <th>Rezervasyon</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="otel : ${oteller}">
-        <td data-label="Ad" th:text="${otel.ad}"></td>
-        <td data-label="Konum" th:text="${otel.konum}"></td>
-        <td data-label="Fiyat" th:text="${otel.fiyat} + ' TL'"></td>
-        <td data-label="Rezervasyon">
-            <a class="button-link" th:href="@{'/rezervasyon?otelId=' + ${otel.id}}">Rezerve Et</a>
-        </td>
-    </tr>
-    </tbody>
-</table>
+<div class="otel-listesi">
+    <div class="otel-kart" th:each="otel : ${oteller}">
+        <h3 th:text="${otel.ad}">Otel Adı</h3>
+        <p><strong>Konum:</strong> <span th:text="${otel.konum}">İstanbul</span></p>
+        <p><strong>Fiyat:</strong> <span th:text="${otel.fiyat} + ' TL'">1000 TL</span></p>
+
+        <!-- Kullanıcı giriş yaptıysa rezervasyon linki, yapmadıysa uyarı -->
+        <a class="rezervasyon-btn"
+           th:if="${session.user != null}"
+           th:href="@{'/rezervasyon?otelId=' + ${otel.id}}">Rezervasyon Yap</a>
+
+        <a class="rezervasyon-btn"
+           th:if="${session.user == null}"
+           href="#"
+           onclick="alert('Lütfen giriş yapınız.'); return false;">Rezervasyon Yap</a>
+    </div>
+</div>
 
 </body>
 </html>

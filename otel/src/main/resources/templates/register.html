@@ -8,6 +8,12 @@
 <body>
 <div class="container">
     <h2>Kayıt Ol</h2>
+
+    <!-- Hata mesajı göster -->
+    <div th:if="${error}" style="color:red; margin-bottom: 10px;">
+        <p th:text="${error}"></p>
+    </div>
+
     <form action="/register" method="post">
         <input type="text" name="username" placeholder="Kullanıcı Adı" required />
         <input type="password" name="password" placeholder="Şifre" required />

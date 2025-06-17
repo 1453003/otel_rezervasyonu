@@ -8,11 +8,19 @@
 <body>
 <div class="container">
     <h2>Giriş Yap</h2>
+
+    <!-- Hata mesajı varsa göster -->
+    <div th:if="${error}" style="color: red; margin-bottom: 10px;">
+        <p th:text="${error}"></p>
+    </div>
+
     <form action="/login" method="post">
         <input type="text" name="username" placeholder="Kullanıcı Adı" required />
         <input type="password" name="password" placeholder="Şifre" required />
         <button type="submit">Giriş Yap</button>
     </form>
+
+    <p>Hesabınız yok mu? <a href="/register">Kayıt Ol</a></p>
 </div>
 </body>
 </html>

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Rezervasyonlarım</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <style>
+        /* HEADER */
+        header {
+            background-color: #c2185b;
+            padding: 20px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: white;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+        .logo {
+            font-size: 26px;
+            font-weight: bold;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin-left: 25px;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+        nav a:hover {
+            color: #f8bbd0;
+        }
+
+        .reservation-list {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .reservation-item {
+            background-color: #fff;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 10px;
+            box-shadow: 0 0 5px rgba(0,0,0,0.1);
+        }
+
+        .reservation-item h4 {
+            margin: 0;
+            color: #d81b60;
+        }
+
+        .reservation-item p {
+            margin: 5px 0 0;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="logo">Otel Rezervasyon</div>
+    <nav>
+        <a th:href="@{/oteller}">Oteller</a>
+        <a th:href="@{/rezervasyonlarim}">Rezervasyonlarım</a>
+        <a th:href="@{/logout}">Çıkış Yap</a>
+    </nav>
+</header>
+
+<div class="reservation-list">
+    <h2 style="text-align:center;">Rezervasyonlarım</h2>
+
+    <div th:if="${rezervasyonlar.isEmpty()}">
+        <p style="text-align:center;">Henüz bir rezervasyonunuz bulunmamaktadır.</p>
+    </div>
+
+    <div th:each="rezervasyon : ${rezervasyonlar}" class="reservation-item">
+        <h4 th:text="${rezervasyon.otel.ad}">Otel Adı</h4>
+        <p th:text="'Müşteri: ' + ${rezervasyon.musteriAdi}">Müşteri Adı</p>
+    </div>
+</div>
+
+<div style="text-align: center; margin: 30px 0;">
+    <a href="javascript:history.back()"
+       style="
+         display: inline-block;
+         background-color: #c2185b;
+         color: white;
+         padding: 12px 30px;
+         border-radius: 25px;
+         font-weight: 600;
+         text-decoration: none;
+         box-shadow: 0 3px 6px rgba(0,0,0,0.2);
+         transition: background-color 0.3s ease;
+    "
+       onmouseover="this.style.backgroundColor='#ad1457'"
+       onmouseout="this.style.backgroundColor='#c2185b'">
+        ← Geri Dön
+    </a>
+</div>
+
+</body>
+</html>

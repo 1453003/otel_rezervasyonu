@@ -3,6 +3,7 @@ package com.example.rezervasyon.controller;
 import com.example.rezervasyon.model.Otel;
 import com.example.rezervasyon.repository.OtelRepository;
 import jakarta.annotation.PostConstruct;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,7 +17,7 @@ public class OtelController {
     @Autowired
     private OtelRepository otelRepository;
 
-    // Otelleri otomatik olarak ekle
+    // Uygulama başladığında varsayılan otelleri ekler
     @PostConstruct
     public void initOtel() {
         if (otelRepository.count() == 0) {
@@ -36,9 +37,10 @@ public class OtelController {
     }
 
     @GetMapping("/oteller")
-    public String otelListesi(Model model) {
+    public String otelListesi(Model model, HttpSession session) {
+
         List<Otel> oteller = otelRepository.findAll();
         model.addAttribute("oteller", oteller);
-        return "oteller";
+        return "oteller"; // thymeleaf: oteller.html
     }
 }

@@ -15,7 +15,10 @@ public class LoginController {
     private UserRepository userRepository;
 
     @GetMapping("/login")
-    public String loginForm() {
+    public String loginForm(HttpSession session) {
+        if (session.getAttribute("user") != null) {
+            return "redirect:/oteller";
+        }
         return "login";
     }
 
@@ -25,14 +28,27 @@ public class LoginController {
                               HttpSession session,
                               Model model) {
         User user = userRepository.findByUsername(username);
-        if (user != null && user.getPassword().equals(password)) {
-            session.setAttribute("user", user);
-            return "redirect:/oteller";
-        } else {
-            model.addAttribute("error", "Hatalı kullanıcı adı veya şifre!");
+
+        if (user == null) {
+            model.addAttribute("error", "Kullanıcı bulunamadı. Lütfen kayıt olunuz.");
             return "login";
         }
+
+        if (!user.getPassword().equals(password)) {
+            model.addAttribute("error", "Hatalı şifre. Lütfen tekrar deneyiniz.");
+            return "login";
+        }
+
+        session.setAttribute("user", user);
+
+        // Kullanıcı admin ise admin paneline, değilse otellere yönlendir
+        if ("ADMIN".equalsIgnoreCase(user.getRole())) {
+            return "redirect:/admin/oteller";
+        } else {
+            return "redirect:/oteller";
+        }
     }
+
 
     @GetMapping("/logout")
     public String logout(HttpSession session) {

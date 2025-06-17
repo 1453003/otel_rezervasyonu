@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Otel Ekle / Güncelle</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f4f4f4;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-label {
+            font-weight: 600;
+        }
+
+        .btn-primary {
+            width: 100%;
+        }
+
+        header {
+            background-color: #880e4f;
+            color: white;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header nav a {
+            color: white;
+            margin-left: 20px;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        header nav a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h3>Admin Paneli</h3>
+    <nav>
+        <a href="/admin/oteller">Otel Listesi</a>
+        <a href="/admin/oteller/ekle">Otel Ekle</a>
+        <a href="/admin/kullanicilar">Kullanıcı Listesi</a>
+        <a href="/admin/personel/ekle">Personel Ekle</a>
+        <a href="/admin/rezervasyonlar">Rezervasyonlar</a>
+        <!-- Yeni eklenen link -->
+        <a href="/logout">Çıkış</a>
+    </nav>
+
+</header>
+
+<div class="container">
+    <h4 class="mb-4 text-center text-primary"
+        th:text="${otel.id != null} ? 'Otel Güncelle' : 'Yeni Otel Ekle'">Form Başlığı</h4>
+
+    <form th:action="@{${otel.id != null} ? '/admin/oteller/guncelle' : '/admin/oteller/ekle'}"
+          th:object="${otel}" method="post">
+        <input type="hidden" th:field="*{id}" />
+
+        <div class="mb-3">
+            <label class="form-label">Otel Adı:</label>
+            <input type="text" class="form-control" th:field="*{ad}" required />
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Konum:</label>
+            <input type="text" class="form-control" th:field="*{konum}" required />
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Fiyat (TL):</label>
+            <input type="number" class="form-control" th:field="*{fiyat}" required />
+        </div>
+
+        <button type="submit" class="btn btn-primary">Kaydet</button>
+    </form>
+</div>
+
+</body>
+</html>

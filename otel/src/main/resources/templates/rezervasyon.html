@@ -1,42 +1,103 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Rezervasyonlarım</title>
-    <link rel="stylesheet" href="/css/style.css">
+    <title>Rezervasyon Yap</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
     <style>
-        .reservation-list {
-            max-width: 600px;
-            margin: 40px auto;
+        /* HEADER STİLİ */
+        header {
+            background-color: #c2185b;
+            padding: 20px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: white;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+        .logo {
+            font-size: 26px;
+            font-weight: bold;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin-left: 25px;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+        nav a:hover {
+            color: #f8bbd0;
         }
 
-        .reservation-item {
-            background-color: #fff;
-            padding: 15px;
-            margin-bottom: 15px;
-            border-radius: 10px;
-            box-shadow: 0 0 5px rgba(0,0,0,0.1);
+        /* GERI DÖN BUTONU STİLİ */
+        .geri-don-btn {
+            display: inline-block;
+            background-color: #c2185b;
+            color: white;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-weight: 600;
+            text-decoration: none;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.2);
+            transition: background-color 0.3s ease;
+            margin: 30px auto 50px;
+            cursor: pointer;
         }
-
-        .reservation-item h4 {
-            margin: 0;
-            color: #d81b60;
-        }
-
-        .reservation-item p {
-            margin: 5px 0 0;
-            color: #666;
+        .geri-don-btn:hover {
+            background-color: #ad1457;
         }
     </style>
 </head>
-<body>
-<div class="reservation-list">
-    <div class="reservation-item">
-        <h4>İstanbul Palace</h4>
-        <p>Rezervasyon Tarihi: 2025-06-05</p>
-    </div>
+<body class="bg-light">
 
-    <!-- Diğer rezervasyonlar buraya gelir -->
+<header>
+    <div class="logo">Otel Rezervasyon</div>
+    <nav>
+        <a th:href="@{/oteller}">Oteller</a>
+        <a th:href="@{/rezervasyonlarim}">Rezervasyonlarım</a>
+        <a th:href="@{/logout}">Çıkış Yap</a>
+    </nav>
+</header>
+
+<div class="container mt-5">
+    <div class="card shadow p-4">
+        <h2 class="mb-4 text-center text-primary">Rezervasyon Bilgileri</h2>
+
+        <form th:action="@{/rezervasyon}" th:object="${rezervasyon}" method="post">
+            <!-- Otel ID gizli olarak gönderilir -->
+            <input type="hidden" th:field="*{otel.id}" />
+
+            <div class="mb-3">
+                <label class="form-label">Otel Adı:</label>
+                <input type="text" class="form-control" th:value="*{otel.ad}" readonly>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Giriş Tarihi:</label>
+                <input type="date" class="form-control" th:field="*{girisTarihi}" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Çıkış Tarihi:</label>
+                <input type="date" class="form-control" th:field="*{cikisTarihi}" required>
+            </div>
+
+            <div th:if="${success}" class="alert alert-success">
+                Rezervasyonunuz başarıyla yapıldı!
+            </div>
+
+            <button type="submit" class="btn btn-success w-100">Rezervasyonu Tamamla</button>
+        </form>
+    </div>
 </div>
+
+<!-- Geri Dön Butonu -->
+<div style="text-align: center;">
+    <a href="javascript:history.back()" class="geri-don-btn">← Geri Dön</a>
+</div>
+
 </body>
 </html>
+
