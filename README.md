@@ -118,7 +118,7 @@ http://localhost:8080
 
 ## 👨‍💻 Geliştirici
 
-**Adınız Soyadınız**
+**Rojin ORHAN**
 E-posta: [rojinothan.39@egmail.com](mailto:rojinothan.39@egmail.com)
 LinkedIn: [https://www.linkedin.com/in/rojin-orhan/](https://www.linkedin.com/in/rojin-orhan/)
 
